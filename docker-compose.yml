@@ -1,0 +1,24 @@
+services:
+  peopleops-assistant:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      CORPUS_DIR: ${CORPUS_DIR:-/app/data/corpus}
+      MANIFEST_PATH: ${MANIFEST_PATH:-/app/data/manifest.json}
+      DB_PATH: ${DB_PATH:-/app/data/veltrix.db}
+      APP_TODAY: ${APP_TODAY:-}
+      LLM_PROVIDER: ${LLM_PROVIDER:-openai}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4o-mini}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      MAX_CONTEXT_TOKENS: ${MAX_CONTEXT_TOKENS:-3000}
+      RETRIEVAL_TOP_K: ${RETRIEVAL_TOP_K:-16}
+      INPUT_COST_PER_MILLION: ${INPUT_COST_PER_MILLION:-}
+      OUTPUT_COST_PER_MILLION: ${OUTPUT_COST_PER_MILLION:-}
+    volumes:
+      - peopleops-data:/app/data
+    restart: unless-stopped
+
+volumes:
+  peopleops-data:
